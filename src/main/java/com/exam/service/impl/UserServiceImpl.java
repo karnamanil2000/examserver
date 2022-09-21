@@ -36,8 +36,31 @@ public class UserServiceImpl implements UserService {
 
             user.getUserRoles().addAll(userRoles);
             local = this.userRepository.save(user);
+
         }
         return local;
+    }
+
+    //getting user by username
+    @Override
+    public User getUser(String username) {
+        return this.userRepository.findByUsername(username);
+    }
+
+    @Override
+    public void deleteUser(Long userId) {
+        this.userRepository.deleteById(userId);
+    }
+
+    @Override
+    public void updateUser(Long id,User user) {
+        User local = this.userRepository.findById(id).get();
+        System.out.println(local.toString());
+        local.setFirstName(user.getFirstName());
+        local.setLastName(user.getLastName());
+        local.setEmail(user.getEmail());
+        local.setProfile(user.getProfile());
+        this.userRepository.save(local);
     }
 
 
